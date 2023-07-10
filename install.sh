@@ -1,7 +1,6 @@
 #!/bin/bash
 
 install() {
-
 	if pacman -Qs $1 > /dev/null ; then
   		echo $1 installed, skipping...
 	else
@@ -9,6 +8,14 @@ install() {
 		sudo pacman -S $1 --noconfirm > /dev/null
 	fi
 }
+
+# backup_directory() {
+
+# }
+
+# link_config_files() {
+
+# }
 
 
 #################################################
@@ -25,11 +32,12 @@ else
 fi
 
 #################################################
-# Install from official repository
+# Install tools from official repository
 #################################################
 install git
-install nvim	
+install neovim	
 install base-devel	
+install man-db
 install nodejs
 install xorg-server
 install xorg-xsetroot 				# Used to set root cursor
@@ -42,6 +50,7 @@ install polybar
 install noto-fonts
 install lxappearance-gtk3
 install arandr
+install nitrogen
 
 #################################################
 # Pipewire
@@ -84,8 +93,9 @@ ln -s `pwd`/.xinitrc $HOME/.xinitrc
 mkdir -p $HOME/.config
 
 # TODO: Rename to *_bak if exists
-ls -s `pwd`/configs/bspwm $HOME/.config/bspwm
-ls -s `pwd`/configs/sxhkd $HOME/.config/sxhkd
+ln -s `pwd`/configs/bspwm $HOME/.config/bspwm
+ln -s `pwd`/configs/sxhkd $HOME/.config/sxhkd
+ln -s `pwd`/configs/polybar $HOME/.config/polybar
 
 # Set root cursor size here
 ls -s `pwd`/configs/.Xresources $HOME/.Xresources

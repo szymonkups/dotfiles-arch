@@ -34,6 +34,8 @@ fi
 
 
 xsetroot -cursor_name left_ptr &
+nitrogen --restore &
 ./.screenlayout/default.sh &
+./.config/polybar/launch.sh &
 sxhkd &
 exec bspwm
