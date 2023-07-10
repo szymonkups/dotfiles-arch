@@ -1,12 +1,12 @@
 #!/bin/bash
 
 install() {
-	if ! command -v $1 &> /dev/null
-	then
+
+	if pacman -Qs $1 > /dev/null ; then
+  		echo $1 installed, skipping...
+	else
 		echo $1 not installed, installing...
 		sudo pacman -S $1 --noconfirm > /dev/null
-	else
-		echo $1 installed, skipping...
 	fi
 }
 
@@ -35,14 +35,22 @@ install pipewire
 install pipewire-alsa
 install pipewire-pulse
 install wireplumber
-systemclt --user enable --now pipewire
+systemctl --user enable --now pipewire
 
 # Use it to create a default display configuration
 install arandr
 
 #install zsh
 install zsh
-chsh -s /bin/zsh
+if [[ "$SHELL" != "/bin/zsh" ]]
+then
+	chsh -s /bin/zsh
+else
+	echo "zsh already set as shell, skipping..."
+fi
+
+# install oh my zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 # install yay
 install base-devel
