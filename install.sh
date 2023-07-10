@@ -82,20 +82,21 @@ else
     echo "oh-my-zsh installed, skipping..."
 fi
 
-# install from AUR
-
-yay -S --noconfirm dmenu-git > /dev/null
-yay -S --noconfirm google-chrome > /dev/null
-
 # link configuration files
-ln -s `pwd`/.xinitrc $HOME/.xinitrc
+[ ! -f $HOME/.xinitrc ] && ln -s `pwd`/.xinitrc $HOME/.xinitrc
 
 mkdir -p $HOME/.config
 
 # TODO: Rename to *_bak if exists
-ln -s `pwd`/configs/bspwm $HOME/.config/bspwm
-ln -s `pwd`/configs/sxhkd $HOME/.config/sxhkd
-ln -s `pwd`/configs/polybar $HOME/.config/polybar
+[ ! -d $HOME/.config/bspwm ] && ln -s `pwd`/configs/bspwm $HOME/.config/bspwm
+[ ! -d $HOME/.config/sxhkd ] && ln -s `pwd`/configs/sxhkd $HOME/.config/sxhkd
+[ ! -d $HOME/.config/polybar ] && ln -s `pwd`/configs/polybar $HOME/.config/polybar
 
 # Set root cursor size here
-ls -s `pwd`/configs/.Xresources $HOME/.Xresources
+[ ! -f $HOME/.Xresources ] && ls -s `pwd`/configs/.Xresources $HOME/.Xresources
+
+
+# install from AUR
+
+# yay -S --noconfirm dmenu-git > /dev/null
+# yay -S --noconfirm google-chrome > /dev/null
