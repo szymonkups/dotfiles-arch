@@ -17,15 +17,6 @@ link_file() {
 	[ ! -f $2 ] && ln -s $1 $2
 }
 
-# backup_directory() {
-
-# }
-
-# link_config_files() {
-
-# }
-
-
 mkdir -p $HOME/.config
 
 #################################################
@@ -98,12 +89,22 @@ else
     echo "oh-my-zsh installed, skipping..."
 fi
 
-
-# TODO: Rename to *_bak if exists
 link_directory `pwd`/configs/bspwm $HOME/.config/bspwm
 link_directory `pwd`/configs/sxhkd $HOME/.config/sxhkd
 link_directory `pwd`/configs/polybar $HOME/.config/polybar
 
+
+# TODO:
+# SCREEN size config
+# BSPWM config
+# POLYBAR CONFIG
+# DMENU installation
+# notification system
+# alacritty configuration
+# backup found cofig files
+# git setup (ssh, code signing, name)
+# neovim config
+# automatic wallpaper
 
 # install from AUR
 
