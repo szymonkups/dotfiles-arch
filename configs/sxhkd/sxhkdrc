@@ -1,0 +1,134 @@
+# terminal emulator
+super + shift + Return
+	alacritty
+
+# volume control
+XF86AudioLowerVolume
+	amixer sset 'Master' 10%- 
+
+XF86AudioRaiseVolume
+	amixer sset 'Master' 10%+ 	
+
+XF86AudioMute
+	amixer sset 'Master' toggle
+
+# program launcher
+super + {@space, p}
+	dmenu_run
+
+# restart sxhkd and bspwm
+super + Escape
+	pkill -USR1 -x sxhkd && bspc wm -r 
+
+#
+# bspwm hotkeys
+#
+
+# quit bspwm
+super + shift + Delete
+	bspc quit
+
+# close and kill
+super + {_,shift + }q
+	bspc node -{c,k}
+
+# alternate between the tiled and monocle layout
+super + {Return,m}
+	bspc desktop -l next
+
+# send the newest marked node to the newest preselected node
+#super + y
+#	bspc node newest.marked.local -n newest.!automatic.local
+
+# swap the current node and the biggest node
+#super + g
+#	bspc node -s biggest
+
+#
+# state/flags
+#
+
+# set the window state
+super + {t,f}
+	bspc node -t {tiled,floating}
+
+
+# Focusing between windows and desktops
+############################################################################
+super + {Left,Down,Up,Right}
+	d={west,south,north,east}; bspc node -f $d || bspc monitor -f $d
+
+# Move node - even between monitors
+############################################################################
+super + shift + {Left,Down,Up,Right}
+	d={west,south,north,east}; bspc node -s $d.local --follow || bspc node -m $d --follow
+
+# focus the next/previous node in the current desktop
+super + {_,shift + }Tab
+    bspc node -f {next,prev}.local.leaf
+
+# focus the next/previous desktop on current monitor
+ctrl + alt + {Left,Right}
+	bspc desktop -f {prev,next}.local
+
+# move selected node to next/prev desktop on current monitor
+ctrl + alt + shift + {Left,Right}
+    bspc node -d {prev,next}.local --follow
+
+# focus the last node/desktop
+#super + {grave,Tab}
+#	bspc {node,desktop} -f last
+
+# focus the older or newer node in the focus history
+#super + {o,i}
+#	bspc wm -h off; \
+#	bspc node {older,newer} -f; \
+#	bspc wm -h on
+
+# focus or send to the given desktop
+super + {_,shift + }{1-9,0}
+	bspc {desktop -f,node -d}.local '^{1-9,10}'
+
+#
+# preselect
+#
+
+# preselect the direction
+super + ctrl + {Left,Down,Up,Right}}
+	bspc node -p {west,south,north,east}
+
+# preselect the ratio
+# super + ctrl + {1-9}
+#	bspc node -o 0.{1-9}
+
+# cancel the preselection for the focused node
+super + ctrl + space
+	bspc node -p cancel
+
+# cancel the preselection for the focused desktop
+#super + ctrl + shift + space
+#	bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
+
+#
+# move/resize
+#
+
+# expand a window by moving one of its side outward
+super + alt + {Left,Down,Up,Right}
+	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+
+# contract a window by moving one of its side inward
+super + alt + shift + {Left,Down,Up,Right}
+	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
+
+super + alt + 3
+	bspc node -r 0.3
+
+# move a floating window
+#super + {Left,Down,Up,Right}
+#	bspc node -v {-20 0,0 20,0 -20,20 0}
+
+
+# screenshot
+Print
+	flameshot gui
