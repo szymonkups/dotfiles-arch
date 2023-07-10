@@ -10,56 +10,70 @@ install() {
 	fi
 }
 
+
+#################################################
+# Install yay
+#################################################
+if ! command -v yay &> /dev/null
+then
+	git clone https://aur.archlinux.org/yay.git 
+	cd yay 
+	makepkg -si
+	cd ..
+else
+	echo "yay installed, skipping..."
+fi
+
+#################################################
 # Install from official repository
+#################################################
 install git
-install vim
+install nvim	
+install base-devel	
 install nodejs
 install xorg-server
-
-# To set root cursor
-install xorg-xsetroot
-
-# To put cursor in center of the screen on start
-install xdotool
-
-install bspwm
+install xorg-xsetroot 				# Used to set root cursor
+install xdotool						# To put the cursor on screen's center at start
+install bspwm						# Tiled window manager
 install sxhkd
 install alacritty
 install openssh
 install polybar
 install noto-fonts
 install lxappearance-gtk3
+install arandr
 
-# Audio via pipewire
+#################################################
+# Pipewire
+#################################################
 install pipewire
 install pipewire-alsa
 install pipewire-pulse
 install wireplumber
 systemctl --user enable --now pipewire
 
-# Use it to create a default display configuration
-install arandr
-
-#install zsh
+#################################################
+# ZSH, oh-my-zsh
+#################################################
 install zsh
 if [[ "$SHELL" != "/bin/zsh" ]]
 then
+	echo "setting zsh as default shell..."
 	chsh -s /bin/zsh
 else
 	echo "zsh already set as shell, skipping..."
 fi
 
 # install oh my zsh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+if [ -d "~/.oh-my-zsh" ] 
+then
+	echo "installing oh-my-zsh..."
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+else
+    echo "oh-my-zsh installed, skipping..."
+fi
 
-# install yay
-install base-devel
-git clone https://aur.archlinux.org/yay.git 
-cd yay 
-makepkg -si
-cd ..
-
-# install from aur
+# install from AUR
 
 yay -S --noconfirm dmenu-git > /dev/null
 yay -S --noconfirm google-chrome > /dev/null
