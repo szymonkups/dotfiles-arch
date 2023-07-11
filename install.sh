@@ -45,9 +45,15 @@ install sxhkd
 install alacritty
 install openssh
 install polybar
-install noto-fonts
 install lxappearance-gtk3
 install nitrogen
+
+#################################################
+# Fonts
+#################################################
+install noto-fonts
+install ttf-jetbrains-mono
+install otf-droid-nerd
 
 #################################################
 # Xorg
