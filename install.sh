@@ -39,7 +39,6 @@ install git
 install neovim	
 install base-devel	
 install man-db
-install nodejs
 install bspwm						# Tiled window manager
 install sxhkd
 install openssh
@@ -79,6 +78,14 @@ systemctl --user enable --now pipewire
 #################################################
 install alacritty
 link_directory `pwd`/configs/alacritty $HOME/.config/alacritty
+
+#################################################
+# Node.js
+#################################################
+install nodejs
+install npm
+sudo npm install -g n # TODO: setup global modules without sudo
+sudo n 16 # TODO: use without sudo
 
 #################################################
 # ZSH, oh-my-zsh
@@ -121,3 +128,4 @@ link_directory `pwd`/configs/polybar $HOME/.config/polybar
 
 # yay -S --noconfirm dmenu-git > /dev/null
 # yay -S --noconfirm google-chrome > /dev/null
+# yay -S --noconfirm nvm > /dev/null
