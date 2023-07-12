@@ -42,7 +42,6 @@ install man-db
 install nodejs
 install bspwm						# Tiled window manager
 install sxhkd
-install alacritty
 install openssh
 install polybar
 install lxappearance-gtk3
@@ -74,6 +73,12 @@ install pipewire-alsa
 install pipewire-pulse
 install wireplumber
 systemctl --user enable --now pipewire
+
+#################################################
+# Alacritty
+#################################################
+install alacritty
+link_directory `pwd`/configs/alacritty $HOME/.config/alacritty
 
 #################################################
 # ZSH, oh-my-zsh
