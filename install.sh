@@ -45,6 +45,7 @@ install openssh
 install polybar
 install lxappearance-gtk3
 install nitrogen
+install wmname
 
 #################################################
 # Fonts
@@ -113,6 +114,7 @@ link_directory `pwd`/configs/polybar $HOME/.config/polybar
 
 
 # TODO:
+# .zshrc
 # SCREEN size config
 # BSPWM config
 # POLYBAR CONFIG
@@ -123,6 +125,7 @@ link_directory `pwd`/configs/polybar $HOME/.config/polybar
 # git setup (ssh, code signing, name)
 # neovim config
 # automatic wallpaper
+# webstorm
 
 # install from AUR
 

@@ -14,7 +14,7 @@ XF86AudioMute
 
 # program launcher
 super + {@space, p}
-	dmenu_run
+	$HOME/.config/polybar/blocks/scripts/launcher.sh
 
 # restart sxhkd and bspwm
 super + Escape

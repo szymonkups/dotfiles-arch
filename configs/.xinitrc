@@ -34,8 +34,10 @@ fi
 
 
 xsetroot -cursor_name left_ptr &
+setxkbmap pl &
 nitrogen --restore &
-./.screenlayout/default.sh &
-./.config/polybar/launch.sh &
+$HOME/.screenlayout/default.sh &
+$HOME/.config/polybar/launch.sh --blocks &
 sxhkd &
+wmname LG3D &
 exec bspwm
