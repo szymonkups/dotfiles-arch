@@ -81,6 +81,13 @@ install alacritty
 link_directory `pwd`/configs/alacritty $HOME/.config/alacritty
 
 #################################################
+# Printer
+#################################################
+install cups
+install system-config-printer
+systemctl enable cups && systemctl start cups
+
+#################################################
 # Node.js
 #################################################
 install nodejs
