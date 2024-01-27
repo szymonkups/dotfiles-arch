@@ -1,0 +1,1 @@
+install_from_official zsh zsh-completions starship

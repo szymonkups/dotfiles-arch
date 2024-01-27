@@ -1,14 +1,6 @@
 #!/bin/bash
 
-install() {
-	if pacman -Qs $1 > /dev/null ; then
-  		echo $1 installed, skipping...
-	else
-		echo $1 not installed, installing...
-		sudo pacman -S $1 --noconfirm > /dev/null
-	fi
-}
-
+# Utilities
 link_directory() {
 	[ ! -d $2 ] && ln -s $1 $2
 }
@@ -17,125 +9,66 @@ link_file() {
 	[ ! -f $2 ] && ln -s $1 $2
 }
 
+OFFICIAL_INSTALL=""
+install_from_official() {
+    OFFICIAL_INSTALL="$OFFICIAL_INSTALL $@"
+}
+
+AUR_INSTALL=""
+install_from_aur() {
+    AUR_INSTALL="$AUR_INSTALL $@"
+}
+
 mkdir -p $HOME/.config
 
-#################################################
-# Install yay
-#################################################
+# Gather things to install
+for f in software/**/install.sh ; do
+    source $f
+done;
+
+# Install from official repository
+sudo pacman -S --noconfirm $OFFICIAL_INSTALL
+
+# Install Yay
 if ! command -v yay &> /dev/null
 then
 	git clone https://aur.archlinux.org/yay.git 
 	cd yay 
 	makepkg -si
 	cd ..
+    rm -rf yay
 else
 	echo "yay installed, skipping..."
 fi
 
-#################################################
-# Install tools from official repository
-#################################################
-install git
-install neovim	
-install base-devel	
-install man-db
-install bspwm						# Tiled window manager
-install sxhkd
-install openssh
-install polybar
-install lxappearance-gtk3
-install nitrogen
-install wmname
+# # Install from AUR
+# yay -S --noconfirm $AUR_INSTALL
 
-#################################################
-# Fonts
-#################################################
-install noto-fonts
-install ttf-jetbrains-mono
-install otf-droid-nerd
-
-#################################################
-# Xorg
-#################################################
-install xorg-server
-install xorg-xsetroot 				# Used to set root cursor
-install xdotool						# To put the cursor on screen's center at start
-install arandr
-
-link_file `pwd`/.xinitrc $HOME/.xinitrc
-link_file `pwd`/configs/.Xresources $HOME/.Xresources
-
-#################################################
-# Pipewire
-#################################################
-install pipewire
-install pipewire-alsa
-install pipewire-pulse
-install wireplumber
-systemctl --user enable --now pipewire
-
-#################################################
-# Alacritty
-#################################################
-install alacritty
-link_directory `pwd`/configs/alacritty $HOME/.config/alacritty
-
-#################################################
-# Printer
-#################################################
-install cups
-install system-config-printer
-systemctl enable cups && systemctl start cups
-
-#################################################
-# Node.js
-#################################################
-install nodejs
-install npm
-sudo npm install -g n # TODO: setup global modules without sudo
-sudo n 16 # TODO: use without sudo
-
-#################################################
-# ZSH, oh-my-zsh
-#################################################
-install zsh
-if [[ "$SHELL" != "/bin/zsh" ]]
-then
-	echo "setting zsh as default shell..."
-	chsh -s /bin/zsh
-else
-	echo "zsh already set as shell, skipping..."
-fi
-
-if [ -d "~/.oh-my-zsh" ] 
-then
-	echo "installing oh-my-zsh..."
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-else
-    echo "oh-my-zsh installed, skipping..."
-fi
-
-link_directory `pwd`/configs/bspwm $HOME/.config/bspwm
-link_directory `pwd`/configs/sxhkd $HOME/.config/sxhkd
-link_directory `pwd`/configs/polybar $HOME/.config/polybar
+# Execute all configurations
+# Gather things to install
+for f in software/**/configure.sh ; do
+    source $f
+done;
 
 
 # TODO:
-# .zshrc
 # SCREEN size config
-# BSPWM config
+# BSPWM monitor config
+# ssh and gpg key config
 # POLYBAR CONFIG
 # DMENU installation
 # notification system
-# alacritty configuration
 # backup found cofig files
 # git setup (ssh, code signing, name)
 # neovim config
-# automatic wallpaper
 # webstorm
+# firewall
 
 # install from AUR
 
 # yay -S --noconfirm dmenu-git > /dev/null
 # yay -S --noconfirm google-chrome > /dev/null
-# yay -S --noconfirm nvm > /dev/null
+# yay -S --noconfirm nvm > /dev/null			
+
+# Next steps:
+# run arandr and save under $HOME/.screenlayout/default.sh

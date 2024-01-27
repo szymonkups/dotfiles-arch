@@ -1,0 +1,1 @@
+install_from_official noto-fonts ttf-jetbrains-mono otf-droid-nerd ttf-nerd-fonts-symbols-mono

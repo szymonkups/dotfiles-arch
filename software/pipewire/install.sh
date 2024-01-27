@@ -1,0 +1,1 @@
+install_from_official pipewire pipewire-alsa pipewire-pulse wireplumber
